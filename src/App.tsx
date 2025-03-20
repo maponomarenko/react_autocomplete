@@ -34,12 +34,10 @@ export const App: React.FC = () => {
 
   const visiblePeople = handleFilter(appliedQuery, peopleFromServer);
 
-  const makeDropdownInactive = debounce(setIsDropdownActive, 300);
-
   const handleDropdownInactive = () => {
-    if (!dropdownQuery.trim()) {
-      makeDropdownInactive(false);
-    }
+    return setTimeout(() => {
+      setIsDropdownActive(false);
+    }, 300);
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -47,7 +45,7 @@ export const App: React.FC = () => {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDropdownQuery(event.target.value);
-    applyQuery(event.target.value);
+    applyQuery(event.target.value.trim());
     setChosenPerson(null);
   };
 
