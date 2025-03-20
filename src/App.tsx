@@ -83,6 +83,7 @@ export const App: React.FC = () => {
                     key={person.slug}
                     onClick={() => {
                       setChosenPerson(person);
+                      setDropdownQuery(person.name);
                     }}
                   >
                     <p
