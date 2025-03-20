@@ -37,14 +37,15 @@ export const App: React.FC = () => {
   const makeDropdownInactive = debounce(setIsDropdownActive, 300);
 
   const handleDropdownInactive = () => {
-    if (!dropdownQuery) {
+    if (!dropdownQuery.trim()) {
       makeDropdownInactive(false);
     }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const applyQuery = useCallback(debounce(setAppliedQuery, 1000), []);
 
-  const handleQueryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDropdownQuery(event.target.value);
     applyQuery(event.target.value);
     setChosenPerson(null);
@@ -69,7 +70,7 @@ export const App: React.FC = () => {
               value={dropdownQuery}
               onFocus={() => setIsDropdownActive(true)}
               onBlur={handleDropdownInactive}
-              onChange={event => handleQueryChange(event)}
+              onChange={event => handleInputChange(event)}
             />
           </div>
 
@@ -84,6 +85,7 @@ export const App: React.FC = () => {
                     onClick={() => {
                       setChosenPerson(person);
                       setDropdownQuery(person.name);
+                      setIsDropdownActive(false);
                     }}
                   >
                     <p
